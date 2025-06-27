@@ -19,7 +19,6 @@ For the best Python experience in VSCode, you'll need the official Python extens
 3.  In the search bar, type `Python`.
 4.  Find the extension provided by **Microsoft** and click **Install**.
 
-![Install Python Extension](https://code.visualstudio.com/assets/docs/languages/python/python-extension-marketplace.png)
 
 ## 3. Setting Up the Python Virtual Environment
 
@@ -37,7 +36,6 @@ A virtual environment is a self-contained directory that holds a specific versio
 
 2.  In the Command Palette, type `Python: Create Environment` and select it from the list.
 
-    ![Create Environment Command](https://code.visualstudio.com/assets/docs/python/environments/create-venv-command.png)
 
 3.  You will be prompted to select a virtual environment type. Choose **Venv**.
 
@@ -49,7 +47,6 @@ A virtual environment is a self-contained directory that holds a specific versio
 
 VSCode should automatically select and activate the new environment for you. You can verify this by looking at the bottom-right corner of the VSCode window. It should show the Python version from your virtual environment (e.g., `Python 3.x.x ('.venv')`).
 
-![Selected Interpreter](https://code.visualstudio.com/assets/docs/python/environments/selected-interpreter-in-statusbar.png)
 
 If it's not selected, you can click on the Python version in the status bar and choose the one that has `('.venv')` next to it.
 
