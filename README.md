@@ -10,7 +10,23 @@ If you don't already have it, download and install VSCode from the official webs
 
 Follow the installation instructions for your operating system (Windows, macOS, or Linux).
 
-## 2. Install the Python Extension for VSCode
+## 2. Clone the GitHub Repository
+
+Once you have VSCode installed, the next step is to clone the repository to your local machine.
+
+1.  Open VSCode.
+2.  Open the **Command Palette** (`Ctrl+Shift+P` or `Cmd+Shift+P`).
+3.  Type `Git: Clone` and press Enter.
+4.  Paste the following URL and press Enter:
+    ```
+    https://github.com/DrDavidL/vscode-venv-setup
+    ```
+5.  Choose a location on your computer to save the project.
+6.  Once it's cloned, VSCode will ask if you want to open the repository. Click **Open**.
+
+Now you have all the project files on your computer.
+
+## 3. Install the Python Extension for VSCode
 
 For the best Python experience in VSCode, you'll need the official Python extension from Microsoft.
 
@@ -20,7 +36,7 @@ For the best Python experience in VSCode, you'll need the official Python extens
 4.  Find the extension provided by **Microsoft** and click **Install**.
 
 
-## 3. Setting Up the Python Virtual Environment
+## 4. Setting Up the Python Virtual Environment
 
 A virtual environment is a self-contained directory that holds a specific version of Python, plus a number of additional packages. Using a virtual environment is a best practice to avoid conflicts between projects that may require different versions of the same package.
 
@@ -62,7 +78,7 @@ If you don't see this, it means the environment is not active in that terminal. 
 *   **On Windows (Command Prompt):** `.venv\Scripts\activate.bat`
 *   **On Windows (PowerShell):** `.venv\Scripts\Activate.ps1`
 
-## 4. Install Project Requirements
+## 5. Install Project Requirements
 
 This project uses a `requirements.txt` file to list all the Python packages it needs to run.
 
@@ -75,7 +91,7 @@ This project uses a `requirements.txt` file to list all the Python packages it n
 
     `pip` is the package installer for Python. This command tells `pip` to read the `requirements.txt` file and install all the packages listed inside it.
 
-## 5. Run the Streamlit App
+## 6. Run the Streamlit App
 
 Once the requirements are installed, you can run the Streamlit demo app.
 
