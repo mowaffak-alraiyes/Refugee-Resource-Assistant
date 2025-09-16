@@ -3,12 +3,18 @@ import requests
 import re
 import qrcode
 import io
+import uuid
+import database as db
 from typing import List, Dict, Tuple
 
 # ===========================
 # Page & Styles
 # ===========================
 st.set_page_config(page_title="Community Resources Chat", layout="wide")
+
+# Initialize database
+db.initialize_database()
+
 st.title("💬 Community Resources Chat")
 
 # Radio -> big buttons that stay highlighted when chosen
@@ -576,6 +582,10 @@ st.session_state.setdefault("scroll_flag", False)
 st.session_state.setdefault("misspelling_suggestion", None)
 st.session_state.setdefault("waiting_for_misspelling_response", False)
 
+# Initialize conversation ID for database logging
+if "convo_id" not in st.session_state:
+    st.session_state["convo_id"] = uuid.uuid4().hex[:12]
+
 # ===========================
 # Sidebar: Pins & Filters
 # ===========================
@@ -826,6 +836,26 @@ def respond_to_query(user_text: str, category: str):
                 "results": to_show,
                 "text": intro
             })
+            
+            # Log assistant message to database
+            def summarize_results(results):
+                lines = []
+                for r in results:
+                    name = r.get("name") or "Unknown"
+                    addr = r.get("address") or ""
+                    phone = r.get("phone") or ""
+                    lines.append(f"{name} | {addr} | {phone}")
+                return "\n".join(lines[:10])
+            
+            reply_text = summarize_results(to_show)
+            reply_json = {"category": category, "results": to_show}
+            db.save_assistant_message(
+                convo_id=st.session_state["convo_id"],
+                reply_text=reply_text,
+                reply_json=reply_json,
+                category=category
+            )
+            
             # Auto-scroll to bottom after successful response
             st.session_state["scroll_flag"] = True
         else:
@@ -863,6 +893,17 @@ def respond_to_query(user_text: str, category: str):
                 "role": "assistant",
                 "text": "No matches in dataset (see national resources above)."
             })
+            
+            # Log assistant message to database (no results case)
+            reply_text = "No matches in dataset (see national resources above)."
+            reply_json = {"category": category, "results": []}
+            db.save_assistant_message(
+                convo_id=st.session_state["convo_id"],
+                reply_text=reply_text,
+                reply_json=reply_json,
+                category=category
+            )
+            
             # Auto-scroll to bottom after response (even if no results)
             st.session_state["scroll_flag"] = True
 
@@ -897,6 +938,14 @@ if prompt:
     
     # Add user message to session state for chat history
     st.session_state["messages"].append({"role": "user", "text": prompt})
+    
+    # Log user message to database
+    db.save_user_message(
+        convo_id=st.session_state["convo_id"],
+        query_text=prompt,
+        category=st.session_state["category"],
+        user_label=None
+    )
     
     # Check if we're waiting for a response to a misspelling suggestion
     if st.session_state.get("waiting_for_misspelling_response", False):
