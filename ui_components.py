@@ -382,3 +382,5 @@ def render_pagination_controls(total_results: int, shown_count: int) -> bool:
         return True
     
     return False
+
+
