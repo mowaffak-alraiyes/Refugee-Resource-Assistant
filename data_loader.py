@@ -376,3 +376,5 @@ def refresh_category_cache(category: str) -> None:
     
     # Reload data
     load_category_data(category)
+
+
