@@ -1,11 +1,12 @@
 import streamlit as st
 import requests
 import re
-import qrcode
-import io
 import uuid
 import database as db
 from typing import List, Dict, Tuple
+import search_helpers
+import data_loader
+import neighborhood_mapping
 
 # ===========================
 # Page & Styles
@@ -46,15 +47,7 @@ div[role="radiogroup"] label[data-checked="true"]{
 # ===========================
 TOP_N = 3  # show first N; user can type "more" to fetch next batch
 
-# URL Configuration for QR Code
-LOCAL_URL = "http://192.168.1.186:8501"  # Fallback for testing on local network
-
-def get_app_public_url():
-    """Safely get the public URL from secrets, with fallback to None."""
-    try:
-        return st.secrets.get("APP_PUBLIC_URL", None)
-    except:
-        return None
+# QR Code functionality removed - not necessary
 
 # Common misspellings with suggested corrections
 MISSPELLING_SUGGESTIONS = {
@@ -219,11 +212,18 @@ def detect_misspellings(query: str) -> List[Tuple[str, str]]:
     return suggestions
 
 def detect_zip_from_query(query: str) -> str:
-    """Auto-detect ZIP code from search query and return it if found."""
-    # Look for 5-digit ZIP codes (60xxx format for Chicago area)
+    """Auto-detect ZIP code or neighborhood from search query and return it if found."""
+    # First, check for ZIP code (60xxx format for Chicago area)
     zip_match = re.search(r'\b(60\d{3})\b', query)
     if zip_match:
         return zip_match.group(1)
+    
+    # Then check for neighborhood name
+    cleaned_query, zips = neighborhood_mapping.expand_neighborhood_query(query)
+    if zips:
+        # Return first ZIP from neighborhood (or could return all for multi-ZIP filtering)
+        return zips[0]
+    
     return None
 
 def clean_query_of_zip(query: str) -> str:
@@ -293,28 +293,36 @@ def detect_day_from_query(query: str) -> str:
     
     return None
 
-def generate_qr_code(url: str) -> bytes:
-    """Generate a QR code for the given URL and return as PNG bytes."""
-    try:
-        qr = qrcode.QRCode(version=1, box_size=10, border=5)
-        qr.add_data(url)
-        qr.make(fit=True)
-        
-        img = qr.make_image(fill_color="black", back_color="white")
-        
-        # Convert to bytes
-        buffer = io.BytesIO()
-        img.save(buffer, format="PNG")
-        buffer.seek(0)
-        return buffer.getvalue()
-    except Exception as e:
-        print(f"Failed to generate QR code: {e}")
-        return None
+# QR code generation function removed - not necessary
 
-def parse_day_ranges(hours_text: str) -> List[str]:
-    """Parse day ranges like 'Mon-Thu' or 'Mon, Wed, Fri' and return list of individual days."""
-    hours_lower = hours_text.lower()
+def parse_day_ranges(hours_input) -> List[str]:
+    """
+    Parse day ranges from hours data.
+    Handles both structured dict format (from JSON) and string format (from .txt files).
+    """
     available_days = []
+    
+    # Handle structured dict format (from JSON files)
+    if isinstance(hours_input, dict):
+        day_map = {
+            "monday": "Monday",
+            "tuesday": "Tuesday", 
+            "wednesday": "Wednesday",
+            "thursday": "Thursday",
+            "friday": "Friday",
+            "saturday": "Saturday",
+            "sunday": "Sunday"
+        }
+        for day_key, day_value in day_map.items():
+            if day_key in hours_input and hours_input[day_key]:
+                available_days.append(day_value)
+        return available_days
+    
+    # Handle string format (from .txt files or hours_text)
+    if not isinstance(hours_input, str):
+        return []
+    
+    hours_lower = hours_input.lower()
     
     # Day mapping for abbreviations
     day_map = {
@@ -362,9 +370,10 @@ def is_day_available_in_dataset(day: str, items: List[Dict]) -> bool:
     
     day_lower = day.lower()
     for item in items:
-        hours = item.get("hours", "")
+        # Try hours_text first (from .txt), then structured hours
+        hours = item.get("hours_text") or item.get("hours") or ""
         if hours:
-            # Use the smart parsing to get all available days
+            # Use the smart parsing to get all available days (handles both dict and string)
             available_days = parse_day_ranges(hours)
             # Check if the requested day is in the available days
             if day in available_days:
@@ -431,24 +440,40 @@ def rank_items(items: List[Dict], query: str, category: str, zip_filter: str, la
 
     ranked = []
     for c in items:
-        # ZIP filter
-        if zip_filter != "All" and c.get("zip") and c["zip"] != zip_filter:
-            continue
-        # Language filter
+        # ZIP filter - handle both "zip" (old format) and "zip_code" (new format)
+        if zip_filter != "All":
+            item_zip = c.get("zip_code") or c.get("zip")
+            if item_zip and item_zip != zip_filter:
+                continue
+        
+        # Language filter - handle both list (new format) and string (old format)
         if lang_filter != "All":
-            langs = (c.get("languages") or "").lower()
-            if lang_filter.lower() not in langs:
+            item_langs = c.get("languages", [])
+            if isinstance(item_langs, list):
+                # Structured format: list of languages
+                lang_match = any(lang_filter.lower() in lang.lower() for lang in item_langs)
+            else:
+                # Old format: string
+                lang_match = lang_filter.lower() in (item_langs or "").lower()
+            if not lang_match:
                 continue
-        # Service filter
+        
+        # Service filter - handle both list (new format) and string (old format)
         if service_filter != "All":
-            services = (c.get("services") or "").lower()
-            if service_filter.lower() not in services:
+            item_services = c.get("services", [])
+            if isinstance(item_services, list):
+                # Structured format: list of services
+                service_match = any(service_filter.lower() in service.lower() for service in item_services)
+            else:
+                # Old format: string
+                service_match = service_filter.lower() in (item_services or "").lower()
+            if not service_match:
                 continue
-        # Day filter
+        # Day filter - try hours_text first (from .txt), then structured hours
         if day_filter != "All":
-            hours = c.get("hours") or ""
+            hours = c.get("hours_text") or c.get("hours") or ""
             if hours:
-                # Use smart parsing to get available days
+                # Use smart parsing to get available days (handles both dict and string)
                 available_days = parse_day_ranges(hours)
                 if day_filter not in available_days:
                     continue
@@ -456,8 +481,25 @@ def rank_items(items: List[Dict], query: str, category: str, zip_filter: str, la
                 # No hours data, skip this item
                 continue
 
-        blob = c["_search_blob"]
-        svc = (c.get("services") or "").lower()
+        # Handle search_blob - use structured data if available
+        blob = c.get("search_blob") or c.get("_search_blob", "")
+        
+        # Build search blob from structured data if not present
+        if not blob and isinstance(c.get("services"), list):
+            blob_parts = [
+                c.get("name", ""),
+                c.get("address", ""),
+                " ".join(c.get("services", [])),
+                " ".join(c.get("subcategories", [])),
+                " ".join(c.get("languages", []))
+            ]
+            blob = " ".join(blob_parts).lower()
+        
+        # Handle services text for matching
+        if isinstance(c.get("services"), list):
+            svc = " ".join(c.get("services", [])).lower()
+        else:
+            svc = (c.get("services_text") or c.get("services") or "").lower()
 
         # If user asked for specific service(s), require them in Services
         if require and not all(p.search(svc) for p in require):
@@ -545,9 +587,35 @@ def friendly_intro(category: str, query: str, zip_filter: str, lang_filter: str,
     return " ".join(parts)
 
 def render_card(idx: int, item: Dict, cat_key: str):
+    import urllib.parse
+    
     # Add friendly personality to the clinic display
     emoji = "🏥" if "health" in cat_key.lower() else "🎓" if "education" in cat_key.lower() else "🏠"
-    st.markdown(f"### {emoji} **{idx}. {item['name']}**")
+    
+    # Show availability badges if available
+    badge_html = ""
+    if item.get("availability_badges"):
+        badges = item["availability_badges"]
+        badge_emojis = {
+            "Free": "🟢",
+            "Low Cost": "💰",
+            "Accepts Medicaid": "🔵",
+            "Walk-in": "🚶",
+            "Interpreter Available": "🌐",
+            "24/7 Available": "🕐",
+            "Appointment Required": "📅"
+        }
+        badge_list = []
+        for badge in badges[:3]:  # Show first 3 badges
+            emoji = badge_emojis.get(badge, "✅")
+            badge_list.append(f"{emoji} {badge}")
+        if badge_list:
+            badge_html = f"<span style='font-size: 0.9em; color: #666;'>{' • '.join(badge_list)}</span>"
+    
+    if badge_html:
+        st.markdown(f"### {emoji} **{idx}. {item['name']}** {badge_html}", unsafe_allow_html=True)
+    else:
+        st.markdown(f"### {emoji} **{idx}. {item['name']}**")
     
     # small inline pin toggle
     col1, col2 = st.columns([1, 9])
@@ -561,13 +629,71 @@ def render_card(idx: int, item: Dict, cat_key: str):
             st.rerun()
 
     with col2:
-        # print full details inline (no expander) with friendly language
-        if item.get("address"):   st.markdown(f"**📍 Where to find them:** {item['address']}")
-        if item.get("website"):   st.markdown(f"**🌐 Check them out online:** {item['website']}")
-        if item.get("phone"):     st.markdown(f"**📞 Give them a call:** {item['phone']}")
-        if item.get("languages"): st.markdown(f"**🗣 They speak:** {item['languages']}")
-        if item.get("services"):  st.markdown(f"**🏥 What they offer:** {item['services']}")
-        if item.get("hours"):     st.markdown(f"**⏰ When they're open:** {item['hours']}")
+        # Address with click-to-map (using link_button for better mobile support)
+        if item.get("address"):
+            map_url = f"https://www.google.com/maps/dir/?api=1&destination={urllib.parse.quote(item['address'])}"
+            st.markdown(f"**📍 Where to find them:**")
+            st.link_button("🗺️ Get Directions", map_url, use_container_width=True)
+            st.markdown(f"`{item['address']}`")
+        
+        # Phone with click-to-call (using link_button)
+        if item.get("phone"):
+            # Extract digits from phone number for tel: link
+            phone_text = item.get("phone", "")
+            phone_digits = re.sub(r'\D', '', phone_text)  # Remove non-digits
+            if phone_digits and len(phone_digits) >= 10:  # Valid phone number
+                tel_url = f"tel:{phone_digits}"
+                st.markdown(f"**📞 Give them a call:**")
+                st.link_button(f"📞 Call {phone_text}", tel_url, use_container_width=True)
+            else:
+                st.markdown(f"**📞 Give them a call:** {phone_text}")
+        
+        # Website with new tab (using link_button)
+        if item.get("website"):
+            st.markdown(f"**🌐 Check them out online:**")
+            st.link_button("🌐 Visit Website", item['website'], use_container_width=True)
+        
+        # Display languages - handle both list and string formats
+        if item.get("languages"):
+            langs = item.get("languages", [])
+            if isinstance(langs, list):
+                st.markdown(f"**🗣 They speak:** {', '.join(langs)}")
+            else:
+                st.markdown(f"**🗣 They speak:** {langs}")
+        
+        # Display services - handle both list and string formats
+        if item.get("services"):
+            services = item.get("services", [])
+            if isinstance(services, list):
+                services_display = ', '.join([s.replace('_', ' ').title() for s in services])
+                st.markdown(f"**🏥 What they offer:** {services_display}")
+            else:
+                st.markdown(f"**🏥 What they offer:** {services}")
+        
+        # Display hours - prefer hours_text (from .txt), fallback to structured hours
+        hours_display = item.get("hours_text") or item.get("hours")
+        if hours_display:
+            if isinstance(hours_display, dict):
+                # Format structured hours nicely
+                hours_parts = []
+                for day in ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]:
+                    day_key = day.lower()
+                    if day_key in hours_display and hours_display[day_key]:
+                        time_ranges = []
+                        for range_group in hours_display[day_key]:
+                            if range_group and len(range_group) == 2:
+                                start = range_group[0]
+                                end = range_group[1]
+                                if len(start) == 2 and len(end) == 2:
+                                    start_time = f"{start[0]:02d}:{start[1]:02d}"
+                                    end_time = f"{end[0]:02d}:{end[1]:02d}"
+                                    time_ranges.append(f"{start_time}-{end_time}")
+                        if time_ranges:
+                            hours_parts.append(f"{day}: {', '.join(time_ranges)}")
+                if hours_parts:
+                    st.markdown(f"**⏰ When they're open:** {'; '.join(hours_parts)}")
+            else:
+                st.markdown(f"**⏰ When they're open:** {hours_display}")
 
 # ===========================
 # Session State
@@ -601,6 +727,14 @@ with st.sidebar:
         st.caption("No items pinned yet.")
 
     st.markdown("---")
+    
+    # Recent searches
+    try:
+        search_helpers.render_recent_searches(st.session_state["category"])
+    except:
+        pass
+    
+    st.markdown("---")
     st.subheader("📂 Filters")
 
 # ===========================
@@ -615,15 +749,36 @@ cat_choice = st.radio(
 )
 
 # ===========================
-# Load dataset
+# Load dataset - NOW USING data_loader.py for structured JSON!
 # ===========================
 def get_dataset(cat_key: str) -> Tuple[List[Dict], str]:
-    if cat_key in st.session_state["datasets_cache"]:
-        return st.session_state["datasets_cache"][cat_key]
-    text = fetch_text_from_sources(DATA_SOURCES[cat_key])
-    items = parse_blocks(text)
-    st.session_state["datasets_cache"][cat_key] = (items, text)
-    return items, text
+    """Load dataset using data_loader.py for structured JSON data."""
+    # Use data_loader for fast, structured JSON loading
+    try:
+        items = data_loader.load_category_data(cat_key)
+        
+        # For backward compatibility, we still need raw_text for filter building
+        # But we can build it from the structured data if needed
+        if cat_key not in st.session_state.get("raw_text_cache", {}):
+            # Build raw text representation from structured data for filter options
+            raw_text_parts = []
+            for item in items[:100]:  # Sample for performance
+                raw_text_parts.append(f"{item.get('name', '')} {item.get('address', '')} {item.get('services_text', '')}")
+            raw_text = "\n".join(raw_text_parts)
+            st.session_state.setdefault("raw_text_cache", {})[cat_key] = raw_text
+        else:
+            raw_text = st.session_state["raw_text_cache"][cat_key]
+        
+        return items, raw_text
+    except Exception as e:
+        # Fallback to old parsing if data_loader fails
+        st.warning(f"⚠️ Using fallback parsing (data_loader failed: {e})")
+        if cat_key in st.session_state.get("datasets_cache", {}):
+            return st.session_state["datasets_cache"][cat_key]
+        text = fetch_text_from_sources(DATA_SOURCES[cat_key])
+        items = parse_blocks(text)
+        st.session_state.setdefault("datasets_cache", {})[cat_key] = (items, text)
+        return items, text
 
 try:
     items, raw_text = get_dataset(st.session_state["category"])
@@ -643,13 +798,27 @@ for line in lang_lines:
 all_langs = sorted(langs)
 
 # Build service filter options based on category
+# Use structured data if available
 service_options = ["All"]
-if cat_choice == "Healthcare":
-    service_options.extend(["dental", "pediatric", "mental health", "women's health", "immunization", "primary care"])
-elif cat_choice == "Education":
-    service_options.extend(["ESL", "GED/Citizenship", "Youth Programs", "Tutoring", "Literacy"])
-elif cat_choice == "Resettlement / Legal / Shelter":
-    service_options.extend(["Legal Services", "Shelter/Housing", "Benefits Assistance", "Resettlement Services"])
+if items and isinstance(items, list) and len(items) > 0 and isinstance(items[0], dict) and "services" in items[0]:
+    # Extract unique services from structured data
+    all_services = set()
+    for item in items:
+        services = item.get("services", [])
+        if isinstance(services, list):
+            all_services.update(services)
+        elif services:
+            # Old format: string
+            all_services.add(services)
+    service_options.extend(sorted([s.replace("_", " ").title() for s in all_services if s]))
+else:
+    # Fallback to hardcoded options
+    if cat_choice == "Healthcare":
+        service_options.extend(["dental", "pediatric", "mental health", "women's health", "immunization", "primary care"])
+    elif cat_choice == "Education":
+        service_options.extend(["ESL", "GED/Citizenship", "Youth Programs", "Tutoring", "Literacy"])
+    elif cat_choice == "Resettlement / Legal / Shelter":
+        service_options.extend(["Legal Services", "Shelter/Housing", "Benefits Assistance", "Resettlement Services"])
 
 # Build day of week filter options from actual hours data
 day_options = ["All"]
@@ -657,9 +826,10 @@ available_days = set()
 
 # Extract available days from hours data using smart parsing
 for item in items:
-    hours = item.get("hours", "")
+    # Try hours_text first (from .txt), then structured hours
+    hours = item.get("hours_text") or item.get("hours") or ""
     if hours:
-        # Use the new smart parsing function
+        # Use the smart parsing function (handles both dict and string)
         days_found = parse_day_ranges(hours)
         for day in days_found:
             available_days.add(day)
@@ -687,35 +857,12 @@ with st.sidebar:
     # Display the tip about auto-detection features
     st.info(tip_text)
     
-    # QR Code section for easy app access
-    st.markdown("---")
-    st.subheader("📱 Quick Access")
+    # Show neighborhood search hint
+    neighborhoods = neighborhood_mapping.get_all_neighborhoods()
+    if neighborhoods:
+        st.caption(f"💡 You can also search by neighborhood (e.g., 'Pilsen', 'Rogers Park'). {len(neighborhoods)} neighborhoods available!")
     
-    # Determine which URL to use for QR code
-    app_public_url = get_app_public_url()
-    qr_url = app_public_url if app_public_url else LOCAL_URL
-    
-    if app_public_url:
-        st.success("🌐 Public URL configured - QR code links to public app")
-    else:
-        st.info("🏠 Local network URL - QR code for same Wi-Fi access")
-    
-    # Generate and display QR code
-    qr_bytes = generate_qr_code(qr_url)
-    if qr_bytes:
-        # Display QR code as image
-        st.image(qr_bytes, caption="Scan to open the app", width=200)
-        
-        # Download button for QR code
-        st.download_button(
-            label="📥 Download QR Code",
-            data=qr_bytes,
-            file_name="community-resources-app.png",
-            mime="image/png"
-        )
-    else:
-        st.error("Failed to generate QR code")
-    
+    # QR Code section removed - not necessary
     st.markdown("---")
     c1, c2 = st.columns(2)
     with c1:
@@ -745,6 +892,13 @@ with st.sidebar:
 # ===========================
 def respond_to_query(user_text: str, category: str):
     is_more = user_text.strip().lower() == "more"
+
+    # 1) Load dataset first (required before using items)
+    items, _ = get_dataset(category)  # get_dataset returns (items, category_str)
+    if not items:
+        with st.chat_message("assistant"):
+            st.error(f"❌ Could not load {category} data. Please try again.")
+        return
 
     # 2) Decide query (user message already added outside this function)
     if is_more:
@@ -782,6 +936,14 @@ def respond_to_query(user_text: str, category: str):
     sf = detected_service or st.session_state.get(f"service_{category}", "All") or "All"
     df = detected_day or st.session_state.get(f"day_{category}", "All") or "All"
     
+    # Apply quick filters if any are active
+    try:
+        quick_filters = st.session_state.get(f"quick_filters_{category}", {})
+        if any(quick_filters.values()):
+            items = search_helpers.filter_by_quick_filters(items, quick_filters)
+    except:
+        pass
+    
     ranked = rank_items(items, query, category, zf, lf, sf, df)
 
     # 4) Exclude already shown if 'more'
@@ -792,6 +954,11 @@ def respond_to_query(user_text: str, category: str):
 
     # 5) Assistant reply (friendly/proactive + cards)
     with st.chat_message("assistant"):
+        # Show loading indicator while processing
+        if not is_more:
+            with st.spinner("🔍 Searching for the best matches..."):
+                pass  # Small delay to show we're working
+        
         if to_show:
             intro = friendly_intro(category, query, zf, lf, sf, df, detected_zip, detected_service, detected_day)
             st.markdown(intro)
@@ -812,10 +979,63 @@ def respond_to_query(user_text: str, category: str):
             if detected_filters:
                 st.info(f"🔍 **Smart filtering:** I automatically detected {', '.join(detected_filters)} from your search and applied those filters!")
             
-            ids = [c["id"] for c in to_show]
-            shown_map[category] = list(prev_ids | set(ids))
-            for i, c in enumerate(to_show, 1):
-                render_card(i, c, category)
+            # Quick filter buttons
+            try:
+                search_helpers.render_quick_filters(category, items)
+                st.markdown("---")
+            except Exception as e:
+                pass  # Fail gracefully if search_helpers has issues
+            
+            # Search suggestions
+            try:
+                search_helpers.render_search_suggestions(query, category, items)
+            except:
+                pass
+            
+            # Map/List view toggle (placed prominently before results)
+            import map_utils
+            view_col1, view_col2 = st.columns([1, 4])
+            with view_col1:
+                view_mode = st.session_state.get(f"view_mode_{category}", "list")
+                if st.button("🗺️ Map View" if view_mode == "list" else "📋 List View", 
+                            key=f"toggle_view_{category}", use_container_width=True):
+                    view_mode = "map" if view_mode == "list" else "list"
+                    st.session_state[f"view_mode_{category}"] = view_mode
+                    st.rerun()
+            
+            # Display results based on view mode
+            if view_mode == "map":
+                # Distance sorting option
+                sort_by_dist = st.checkbox(
+                    "📍 Sort by distance (nearest first)", 
+                    key=f"sort_distance_{category}",
+                    help="Sort results by distance from Chicago center"
+                )
+                
+                # Get user location from ZIP if available for more accurate sorting
+                user_location = None
+                if zf != "All":
+                    # Try to geocode ZIP code center for better distance calculation
+                    try:
+                        import map_utils as mu
+                        zip_address = f"Chicago, IL {zf}"
+                        coords = mu.geocode_address(zip_address)
+                        if coords:
+                            user_location = coords
+                    except:
+                        pass
+                
+                map_utils.render_map_view(
+                    to_show, 
+                    category, 
+                    user_location=user_location,
+                    sort_by_dist=sort_by_dist
+                )
+            else:
+                ids = [c["id"] for c in to_show]
+                shown_map[category] = list(prev_ids | set(ids))
+                for i, c in enumerate(to_show, 1):
+                    render_card(i, c, category)
 
             # friendly nudge to refine
             st.info(
@@ -827,6 +1047,19 @@ def respond_to_query(user_text: str, category: str):
             st.info(
                 "Want to narrow it down further? Tell me your ZIP, preferred language, service type (e.g., dental, ESL, legal), or day of the week (e.g., monday, friday)."
             )
+            
+            # Share results button
+            try:
+                search_helpers.render_share_results_button(to_show, query, category)
+            except:
+                pass
+            
+            # Add to recent searches
+            if not is_more:
+                try:
+                    search_helpers.add_to_recent_searches(query, category)
+                except:
+                    pass
 
             # Persist assistant block
             st.session_state["messages"].append({
@@ -884,6 +1117,23 @@ def respond_to_query(user_text: str, category: str):
                     "Feel free to ask me about other services or locations!"
                 )
                 
+                # Show search suggestions for empty results
+                try:
+                    st.markdown("**💡 Try these searches instead:**")
+                    suggestions = search_helpers.get_search_suggestions(query, category, items)
+                    related = search_helpers.get_related_searches(query, category)
+                    
+                    all_suggestions = (suggestions + related)[:5]
+                    if all_suggestions:
+                        cols = st.columns(min(len(all_suggestions), 5))
+                        for i, suggestion in enumerate(all_suggestions):
+                            with cols[i]:
+                                if st.button(f"🔍 {suggestion}", key=f"empty_suggestion_{i}_{category}"):
+                                    st.session_state[f"search_suggestion_{category}"] = suggestion
+                                    st.rerun()
+                except:
+                    pass
+                
                 # Add helpful follow-up for general questions
                 st.markdown(
                     "**I can help you look up programs from our local lists. Tell me a service (e.g., dental, ESL, legal) and a ZIP or neighborhood. "
@@ -932,6 +1182,12 @@ for msg in st.session_state["messages"]:
 # ===========================
 # Show current user input immediately (if any)
 # ===========================
+# Check for search suggestion from sidebar
+suggestion_key = f"search_suggestion_{st.session_state['category']}"
+if suggestion_key in st.session_state:
+    prompt = st.session_state.pop(suggestion_key)
+    # Will be processed below
+
 if prompt:
     with st.chat_message("user"):
         st.markdown(prompt)
