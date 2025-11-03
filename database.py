@@ -4,6 +4,7 @@ import logging
 from typing import Optional, Dict, Any
 import psycopg
 from psycopg.rows import dict_row
+import streamlit as st
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -18,17 +19,29 @@ class NeonDatabase:
         """Get database connection using passwordless token"""
         try:
             if self.connection is None or self.connection.closed:
-                # Use passwordless token from secrets
-                token = os.getenv("NEON_PASSWORDLESS_TOKEN")
+                # Try to get credentials from Streamlit secrets first, then environment variables, then fallback
+                try:
+                    # Use Streamlit secrets
+                    host = st.secrets["NEON_DB_HOST"]
+                    dbname = st.secrets["NEON_DB_NAME"]
+                    user = st.secrets["NEON_DB_USER"]
+                    token = st.secrets["NEON_PASSWORDLESS_TOKEN"]
+                    sslmode = st.secrets["NEON_SSLMODE"]
+                    logger.info("Using Streamlit secrets for database connection")
+                except (KeyError, AttributeError):
+                    # Fallback to environment variables
+                    host = os.getenv("NEON_DB_HOST", "ep-summer-hall-ad52e1og-pooler.c-2.us-east-1.aws.neon.tech")
+                    dbname = os.getenv("NEON_DB_NAME", "neondb")
+                    user = os.getenv("NEON_DB_USER", "neondb_owner")
+                    token = os.getenv("NEON_PASSWORDLESS_TOKEN", "npg_0HfEmGgOYVp3")
+                    sslmode = os.getenv("NEON_SSLMODE", "require")
+                    logger.info("Using environment variables for database connection")
+                
                 if not token:
-                    logger.error("NEON_PASSWORDLESS_TOKEN not found in environment")
+                    logger.error("NEON_PASSWORDLESS_TOKEN not found in secrets or environment")
                     return None
                 
-                # Build connection string
-                host = os.getenv("NEON_DB_HOST", "pg.neon.tech")
-                dbname = os.getenv("NEON_DB_NAME", "neondb")
-                user = os.getenv("NEON_DB_USER", "you@example.com")
-                sslmode = os.getenv("NEON_SSLMODE", "require")
+                logger.info(f"Connecting to database: {host}/{dbname} as {user}")
                 
                 # Use passwordless token as password
                 conn_str = f"postgresql://{user}:{token}@{host}/{dbname}?sslmode={sslmode}"
@@ -191,27 +204,35 @@ class NeonDatabase:
             self.connection.close()
             logger.info("Database connection closed")
 
-# Global database instance
-db = NeonDatabase()
+# Global database instance (lazy initialization)
+db = None
+
+def get_db_instance():
+    """Get or create database instance"""
+    global db
+    if db is None:
+        db = NeonDatabase()
+    return db
 
 # Convenience functions
 def initialize_database():
     """Initialize the database tables"""
-    return db.initialize_database()
+    return get_db_instance().initialize_database()
 
 def save_user_message(convo_id: str, query_text: str, category: str, user_label: Optional[str] = None):
     """Save a user message"""
-    return db.save_user_message(convo_id, query_text, category, user_label)
+    return get_db_instance().save_user_message(convo_id, query_text, category, user_label)
 
 def save_assistant_message(convo_id: str, reply_text: str, reply_json: Dict[str, Any], category: str):
     """Save an assistant message"""
-    return db.save_assistant_message(convo_id, reply_text, reply_json, category)
+    return get_db_instance().save_assistant_message(convo_id, reply_text, reply_json, category)
 
 def get_conversation_history(convo_id: str) -> list:
     """Get conversation history"""
-    return db.get_conversation_history(convo_id)
+    return get_db_instance().get_conversation_history(convo_id)
 
 def close_database():
     """Close the database connection"""
-    db.close()
+    if db is not None:
+        db.close()
 
