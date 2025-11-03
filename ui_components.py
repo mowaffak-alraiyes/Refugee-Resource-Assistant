@@ -22,27 +22,57 @@ def render_enhanced_card(index: int, item: Dict[str, Any], category: str) -> Non
         col1, col2 = st.columns([2, 1])
         
         with col1:
-            # Address with click-to-map
+            # Address with click-to-map (using link_button for better mobile support)
             if item.get("address"):
                 map_url = f"https://www.google.com/maps/dir/?api=1&destination={urllib.parse.quote(item['address'])}"
-                st.markdown(f"📍 **Where to find them:** [{item['address']}]({map_url})")
+                st.markdown(f"📍 **Where to find them:**")
+                st.link_button("🗺️ Get Directions", map_url, use_container_width=True)
+                st.markdown(f"`{item['address']}`")
             
-            # Phone with click-to-call
+            # Phone with click-to-call (using link_button)
             if item.get("phone"):
                 phone_digits = item.get("phone_digits", "")
                 if phone_digits:
-                    st.markdown(f"📞 **Call them:** [{item['phone']}](tel:{phone_digits})")
+                    tel_url = f"tel:{phone_digits}"
+                    st.markdown(f"📞 **Call them:**")
+                    st.link_button(f"📞 Call {item['phone']}", tel_url, use_container_width=True)
                 else:
                     st.markdown(f"📞 **Call them:** {item['phone']}")
             
-            # Website with new tab
+            # Website with new tab (using link_button)
             if item.get("website"):
-                st.markdown(f"🌐 **Check them out online:** [{item['website']}]({item['website']})")
+                st.markdown(f"🌐 **Check them out online:**")
+                st.link_button("🌐 Visit Website", item['website'], use_container_width=True)
             
-            # Services
+            # Availability badges (display prominently)
+            if item.get("availability_badges"):
+                badges = item["availability_badges"]
+                badge_colors = {
+                    "Free": "🟢",
+                    "Low Cost": "🟡",
+                    "Accepts Medicaid": "🔵",
+                    "Walk-in": "🟠",
+                    "Interpreter Available": "🟣",
+                    "24/7 Available": "⚫",
+                    "Appointment Required": "⚪"
+                }
+                badge_display = " ".join([f"{badge_colors.get(badge, '•')} **{badge}**" for badge in badges])
+                st.markdown(f"**Availability:** {badge_display}")
+            
+            # Services and Subcategories
+            if item.get("subcategories"):
+                subcats_text = ", ".join(item["subcategories"])
+                st.markdown(f"📋 **Category:** {subcats_text}")
+            
+            # Services (normalized service types)
             if item.get("services"):
-                services_text = ", ".join(item["services"])
+                services_text = ", ".join(item["services"]).replace("_", " ").title()
                 st.markdown(f"🛠️ **Services:** {services_text}")
+            
+            # Original services text (more detailed)
+            if item.get("services_text"):
+                with st.expander("📝 Full Service Description"):
+                    st.markdown(item["services_text"])
             
             # Languages
             if item.get("languages"):
@@ -62,38 +92,23 @@ def render_enhanced_card(index: int, item: Dict[str, Any], category: str) -> Non
                         st.markdown(f"⏰ **When they're open:** {hours_text}")
         
         with col2:
-            # Micro-actions
+            # Quick Actions (simplified - main actions are in col1 with link_button)
             st.markdown("**Quick Actions:**")
-            
-            # Call button
-            if item.get("phone_digits"):
-                if st.button("📞 Call", key=f"call_{category}_{item['id']}", help="Click to call"):
-                    st.markdown(f"[Call {item['phone']}](tel:{item['phone_digits']})")
-            
-            # Directions button
-            if item.get("address"):
-                if st.button("🗺️ Directions", key=f"dir_{category}_{item['id']}", help="Get directions"):
-                    map_url = f"https://www.google.com/maps/dir/?api=1&destination={urllib.parse.quote(item['address'])}"
-                    st.markdown(f"[Get Directions]({map_url})")
-            
-            # Website button
-            if item.get("website"):
-                if st.button("🌐 Website", key=f"web_{category}_{item['id']}", help="Visit website"):
-                    st.markdown(f"[Visit Website]({item['website']})")
             
             # Pin/Unpin button
             pinned_now = is_pinned(category, item["id"])
             label = "📌 Unpin" if pinned_now else "📌 Pin"
-            if st.button(label, key=f"pin_{category}_{item['id']}", help="Pin/unpin this resource"):
+            if st.button(label, key=f"pin_{category}_{item['id']}", help="Pin/unpin this resource", use_container_width=True):
                 toggle_pin(category, item)
                 st.rerun()
             
             # Copy buttons
-            if st.button("📋 Copy Address", key=f"copy_addr_{category}_{item['id']}", help="Copy address"):
-                st.code(item.get("address", ""))
+            if item.get("address"):
+                if st.button("📋 Copy Address", key=f"copy_addr_{category}_{item['id']}", help="Copy address", use_container_width=True):
+                    st.code(item.get("address", ""))
             
             if item.get("phone"):
-                if st.button("📋 Copy Phone", key=f"copy_phone_{category}_{item['id']}", help="Copy phone number"):
+                if st.button("📋 Copy Phone", key=f"copy_phone_{category}_{item['id']}", help="Copy phone number", use_container_width=True):
                     st.code(item.get("phone", ""))
         
         st.divider()
@@ -128,12 +143,14 @@ def toggle_pin(category: str, item: Dict[str, Any]) -> None:
         "phone": item.get("phone", ""),
         "website": item.get("website", ""),
         "services": item.get("services", []),
+        "subcategories": item.get("subcategories", []),
+        "availability_badges": item.get("availability_badges", []),
         "languages": item.get("languages", []),
     })
     st.session_state["pinned"] = pinned
 
 def render_pinned_sidebar() -> None:
-    """Render pinned items in sidebar."""
+    """Render pinned items in sidebar with export functionality."""
     pinned = st.session_state.get("pinned", [])
     
     if not pinned:
@@ -142,8 +159,22 @@ def render_pinned_sidebar() -> None:
     
     st.subheader("📌 Pinned Resources")
     
+    # Export buttons
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("📥 Export CSV", key="export_csv_pins", help="Download pinned resources as CSV"):
+            export_pins_csv(pinned)
+    with col2:
+        if st.button("📥 Export JSON", key="export_json_pins", help="Download pinned resources as JSON"):
+            export_pins_json(pinned)
+    
     for i, item in enumerate(pinned):
         with st.expander(f"{item['name']} ({item['category']})"):
+            if item.get('subcategories'):
+                st.markdown(f"**Category:** {', '.join(item['subcategories'])}")
+            if item.get('services'):
+                services_text = ", ".join(item['services']).replace("_", " ").title()
+                st.markdown(f"**Services:** {services_text}")
             st.markdown(f"**Address:** {item['address']}")
             if item['phone']:
                 st.markdown(f"**Phone:** {item['phone']}")
@@ -165,38 +196,54 @@ def render_pinned_sidebar() -> None:
                         copy_text += f"\n{item['phone']}"
                     st.code(copy_text)
     
-    # Export pinned items
-    if st.button("📤 Export Pins"):
-        export_pins()
-
-def export_pins() -> None:
-    """Export pinned items to CSV/JSON."""
-    pinned = st.session_state.get("pinned", [])
+def export_pins_csv(pinned: List[Dict[str, Any]]) -> None:
+    """Export pinned items to CSV."""
+    import csv
+    import io
     
     if not pinned:
         st.warning("No pinned items to export!")
         return
     
-    # CSV format
-    csv_data = "Name,Category,Address,Phone,Website,Services,Languages\n"
+    output = io.StringIO()
+    writer = csv.DictWriter(output, fieldnames=[
+        "name", "category", "address", "phone", "website", "services", "subcategories", "availability_badges", "languages"
+    ])
+    writer.writeheader()
+    
     for item in pinned:
-        services = "; ".join(item.get("services", []))
-        languages = "; ".join(item.get("languages", []))
-        csv_data += f'"{item["name"]}","{item["category"]}","{item["address"]}","{item["phone"]}","{item["website"]}","{services}","{languages}"\n'
+        row = {
+            "name": item.get("name", ""),
+            "category": item.get("category", ""),
+            "address": item.get("address", ""),
+        "phone": item.get("phone", ""),
+        "website": item.get("website", ""),
+        "services": ", ".join(item.get("services", [])),
+        "subcategories": ", ".join(item.get("subcategories", [])),
+        "availability_badges": ", ".join(item.get("availability_badges", [])),
+        "languages": ", ".join(item.get("languages", []))
+        }
+        writer.writerow(row)
     
     st.download_button(
         label="📥 Download CSV",
-        data=csv_data,
+        data=output.getvalue(),
         file_name="pinned_resources.csv",
         mime="text/csv"
     )
-    
-    # JSON format
+
+def export_pins_json(pinned: List[Dict[str, Any]]) -> None:
+    """Export pinned items to JSON."""
     import json
-    json_data = json.dumps(pinned, indent=2)
+    
+    if not pinned:
+        st.warning("No pinned items to export!")
+        return
+    
+    json_str = json.dumps(pinned, indent=2, ensure_ascii=False)
     st.download_button(
         label="📥 Download JSON",
-        data=json_data,
+        data=json_str,
         file_name="pinned_resources.json",
         mime="application/json"
     )
@@ -252,54 +299,7 @@ def render_enhanced_filters(category: str, items: List[Dict[str, Any]]) -> tuple
     
     return zip_filter, lang_filter, service_filter, day_filter
 
-# ===========================
-# QR Code Section
-# ===========================
-
-def render_qr_section() -> None:
-    """Render QR code section in sidebar."""
-    st.subheader("📱 Quick Access")
-    
-    # Get app URL
-    try:
-        app_public_url = st.secrets.get("APP_PUBLIC_URL", None)
-        qr_url = app_public_url if app_public_url else "http://192.168.1.186:8502"
-    except:
-        qr_url = "http://192.168.1.186:8502"
-    
-    # Generate QR code
-    try:
-        import qrcode
-        import io
-        
-        qr = qrcode.QRCode(version=1, box_size=10, border=5)
-        qr.add_data(qr_url)
-        qr.make(fit=True)
-        
-        img = qr.make_image(fill_color="black", back_color="white")
-        
-        # Convert to bytes
-        img_bytes = io.BytesIO()
-        img.save(img_bytes, format='PNG')
-        img_bytes.seek(0)
-        
-        st.image(img_bytes, caption="Scan to access app")
-        
-        # Download button
-        st.download_button(
-            label="📥 Download QR Code",
-            data=img_bytes.getvalue(),
-            file_name="app_qr_code.png",
-            mime="image/png"
-        )
-        
-        if app_public_url:
-            st.success("🌐 Public URL configured")
-        else:
-            st.info("🏠 Local network URL")
-            
-    except Exception as e:
-        st.error(f"QR code generation failed: {e}")
+# QR Code section removed - not necessary
 
 # ===========================
 # Mobile-Friendly Components
