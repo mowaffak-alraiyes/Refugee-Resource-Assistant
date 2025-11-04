@@ -1,0 +1,1330 @@
+[
+  {
+    "id": "1",
+    "name": "Chinese Mutual Aid Association (CMAA)",
+    "address": "📍 1016 W. Argyle St, Chicago, IL 60640",
+    "phone": "📞 (773) 784-2900",
+    "phone_digits": "",
+    "website": "",
+    "zip_code": "60640",
+    "services": [
+      "computer_literacy",
+      "primary_care",
+      "citizenship",
+      "youth_tutoring",
+      "esl",
+      "literacy"
+    ],
+    "services_text": "🏥 Services: Free ESL classes (beginner to advanced), citizenship instruction, healthcare literacy and computer classes, one-on-one tutoring for adult immigrants",
+    "subcategories": [
+      "Computer Literacy",
+      "Adult Literacy",
+      "ESL Classes",
+      "Citizenship Preparation",
+      "Youth Tutoring"
+    ],
+    "availability_badges": [
+      "Free"
+    ],
+    "languages": [
+      "spanish",
+      "mandarin",
+      "hindi"
+    ],
+    "hours": {
+      "monday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ],
+      "friday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ]
+    },
+    "hours_text": "⏰ Hours: Mon–Fri 9:00 AM – 5:00 PM",
+    "search_blob": "chinese mutual aid association (cmaa) 📍 1016 w. argyle st, chicago, il 60640 🏥 services: free esl classes (beginner to advanced), citizenship instruction, healthcare literacy and computer classes, one-on-one tutoring for adult immigrants computer_literacy primary_care citizenship youth_tutoring esl literacy computer literacy adult literacy esl classes citizenship preparation youth tutoring spanish mandarin hindi ⏰ hours: mon–fri 9:00 am – 5:00 pm"
+  },
+  {
+    "id": "2",
+    "name": "RefugeeOne",
+    "address": "📍 5705 N. Lincoln Ave, Chicago, IL 60659",
+    "phone": "📞 (773) 989-5647",
+    "phone_digits": "",
+    "website": "",
+    "zip_code": "60659",
+    "services": [
+      "workforce",
+      "primary_care",
+      "refugee_resettlement",
+      "youth_tutoring",
+      "esl",
+      "employment_assistance"
+    ],
+    "services_text": "🏥 Services: English language training classes for adult refugees; youth tutoring and after-school programs; employment readiness and other resettlement services",
+    "subcategories": [
+      "Workforce Development",
+      "Youth Tutoring",
+      "ESL Classes"
+    ],
+    "availability_badges": [],
+    "languages": [
+      "french",
+      "urdu",
+      "hindi",
+      "spanish",
+      "arabic",
+      "polish"
+    ],
+    "hours": {
+      "monday": [
+        [
+          [
+            8,
+            30
+          ],
+          [
+            4,
+            30
+          ]
+        ]
+      ],
+      "friday": [
+        [
+          [
+            8,
+            30
+          ],
+          [
+            4,
+            30
+          ]
+        ]
+      ]
+    },
+    "hours_text": "⏰ Hours: Mon–Fri 8:30 AM – 4:30 PM",
+    "search_blob": "refugeeone 📍 5705 n. lincoln ave, chicago, il 60659 🏥 services: english language training classes for adult refugees; youth tutoring and after-school programs; employment readiness and other resettlement services workforce primary_care refugee_resettlement youth_tutoring esl employment_assistance workforce development youth tutoring esl classes french urdu hindi spanish arabic polish ⏰ hours: mon–fri 8:30 am – 4:30 pm"
+  },
+  {
+    "id": "3",
+    "name": "World Relief Chicago",
+    "address": "📍 3507 W. Lawrence Ave, Chicago, IL 60625",
+    "phone": "📞 (773) 583-9191",
+    "phone_digits": "",
+    "website": "",
+    "zip_code": "60625",
+    "services": [
+      "workforce",
+      "mental_health",
+      "youth_tutoring",
+      "esl",
+      "employment_assistance"
+    ],
+    "services_text": "🏥 Services: Free ESL classes (daytime and evening) for immigrants and refugees; one-on-one English tutoring; career advancement classes and job counseling",
+    "subcategories": [
+      "Workforce Development",
+      "Youth Tutoring",
+      "ESL Classes"
+    ],
+    "availability_badges": [
+      "Free"
+    ],
+    "languages": [
+      "french",
+      "spanish"
+    ],
+    "hours": {
+      "monday": [
+        [
+          [
+            8,
+            30
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ],
+      "friday": [
+        [
+          [
+            8,
+            30
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ]
+    },
+    "hours_text": "⏰ Hours: Mon–Fri 8:30 AM – 5:00 PM",
+    "search_blob": "world relief chicago 📍 3507 w. lawrence ave, chicago, il 60625 🏥 services: free esl classes (daytime and evening) for immigrants and refugees; one-on-one english tutoring; career advancement classes and job counseling workforce mental_health youth_tutoring esl employment_assistance workforce development youth tutoring esl classes french spanish ⏰ hours: mon–fri 8:30 am – 5:00 pm"
+  },
+  {
+    "id": "4",
+    "name": "Ethiopian Community Association of Chicago (ECAC)",
+    "address": "📍 5800 N. Lincoln Ave, Chicago, IL 60659",
+    "phone": "📞 (773) 508-0303",
+    "phone_digits": "",
+    "website": "",
+    "zip_code": "60659",
+    "services": [
+      "employment_assistance",
+      "workforce",
+      "primary_care",
+      "citizenship",
+      "youth_tutoring",
+      "esl",
+      "literacy"
+    ],
+    "services_text": "🏥 Services: Free ESL classes and literacy tutoring for adult refugees; civics and cultural orientation; job readiness and placement assistance",
+    "subcategories": [
+      "Adult Literacy",
+      "Citizenship Preparation",
+      "Youth Tutoring",
+      "ESL Classes"
+    ],
+    "availability_badges": [
+      "Free"
+    ],
+    "languages": [
+      "urdu",
+      "spanish",
+      "arabic",
+      "hindi"
+    ],
+    "hours": {
+      "monday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ],
+      "friday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ]
+    },
+    "hours_text": "⏰ Hours: Mon–Fri 9:00 AM – 5:00 PM",
+    "search_blob": "ethiopian community association of chicago (ecac) 📍 5800 n. lincoln ave, chicago, il 60659 🏥 services: free esl classes and literacy tutoring for adult refugees; civics and cultural orientation; job readiness and placement assistance employment_assistance workforce primary_care citizenship youth_tutoring esl literacy adult literacy citizenship preparation youth tutoring esl classes urdu spanish arabic hindi ⏰ hours: mon–fri 9:00 am – 5:00 pm"
+  },
+  {
+    "id": "5",
+    "name": "Indo-American Center (IAC)",
+    "address": "📍 6328 N. California Ave, Chicago, IL 60659",
+    "phone": "📞 (773) 973-4444",
+    "phone_digits": "",
+    "website": "",
+    "zip_code": "60659",
+    "services": [
+      "computer_literacy",
+      "primary_care",
+      "youth_tutoring",
+      "esl",
+      "literacy"
+    ],
+    "services_text": "🏥 Services: Free ESL classes (four levels) and adult literacy tutoring; “While You’re Waiting” Saturday conversation classes; basic computer skills integrated into ESL",
+    "subcategories": [
+      "Computer Literacy",
+      "Adult Literacy",
+      "Youth Tutoring",
+      "ESL Classes"
+    ],
+    "availability_badges": [
+      "Free"
+    ],
+    "languages": [
+      "urdu",
+      "arabic",
+      "hindi"
+    ],
+    "hours": {
+      "monday": [
+        [
+          [
+            10,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ],
+      "friday": [
+        [
+          [
+            10,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ]
+    },
+    "hours_text": "⏰ Hours: Mon–Fri 10:00 AM – 5:00 PM",
+    "search_blob": "indo-american center (iac) 📍 6328 n. california ave, chicago, il 60659 🏥 services: free esl classes (four levels) and adult literacy tutoring; “while you’re waiting” saturday conversation classes; basic computer skills integrated into esl computer_literacy primary_care youth_tutoring esl literacy computer literacy adult literacy youth tutoring esl classes urdu arabic hindi ⏰ hours: mon–fri 10:00 am – 5:00 pm"
+  },
+  {
+    "id": "6",
+    "name": "Pan-African Association",
+    "address": "📍 6163 N. Broadway St, Chicago, IL 60660",
+    "phone": "📞 (773) 381-9723",
+    "phone_digits": "",
+    "website": "",
+    "zip_code": "60660",
+    "services": [
+      "workforce",
+      "citizenship",
+      "youth_tutoring",
+      "esl",
+      "employment_assistance"
+    ],
+    "services_text": "🏥 Services: Free ESL classes and one-on-one tutoring for African immigrants; U.S. citizenship preparation classes; employment services and job coaching",
+    "subcategories": [
+      "Citizenship Preparation",
+      "Workforce Development",
+      "Youth Tutoring",
+      "ESL Classes"
+    ],
+    "availability_badges": [
+      "Free"
+    ],
+    "languages": [
+      "french",
+      "spanish"
+    ],
+    "hours": {
+      "monday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ],
+      "friday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ]
+    },
+    "hours_text": "⏰ Hours: Mon–Fri 9:00 AM – 5:00 PM",
+    "search_blob": "pan-african association 📍 6163 n. broadway st, chicago, il 60660 🏥 services: free esl classes and one-on-one tutoring for african immigrants; u.s. citizenship preparation classes; employment services and job coaching workforce citizenship youth_tutoring esl employment_assistance citizenship preparation workforce development youth tutoring esl classes french spanish ⏰ hours: mon–fri 9:00 am – 5:00 pm"
+  },
+  {
+    "id": "7",
+    "name": "Hanul Family Alliance",
+    "address": "📍 5008 N. Kedzie Ave, Chicago, IL 60625",
+    "phone": "📞 (773) 478-8851",
+    "phone_digits": "",
+    "website": "",
+    "zip_code": "60625",
+    "services": [
+      "esl",
+      "computer_literacy"
+    ],
+    "services_text": "🏥 Services: Free ESL classes for immigrants (with focus on Korean seniors) and basic computer classes; senior wellness and social programs",
+    "subcategories": [
+      "Computer Literacy",
+      "ESL Classes"
+    ],
+    "availability_badges": [
+      "Free"
+    ],
+    "languages": [],
+    "hours": {
+      "monday": [
+        [
+          [
+            8,
+            30
+          ],
+          [
+            4,
+            30
+          ]
+        ]
+      ],
+      "friday": [
+        [
+          [
+            8,
+            30
+          ],
+          [
+            4,
+            30
+          ]
+        ]
+      ]
+    },
+    "hours_text": "⏰ Hours: Mon–Fri 8:30 AM – 4:30 PM",
+    "search_blob": "hanul family alliance 📍 5008 n. kedzie ave, chicago, il 60625 🏥 services: free esl classes for immigrants (with focus on korean seniors) and basic computer classes; senior wellness and social programs esl computer_literacy computer literacy esl classes ⏰ hours: mon–fri 8:30 am – 4:30 pm"
+  },
+  {
+    "id": "8",
+    "name": "HANA Center",
+    "address": "📍 4300 N. California Ave, Chicago, IL 60618",
+    "phone": "📞 (773) 583-5501",
+    "phone_digits": "",
+    "website": "",
+    "zip_code": "60618",
+    "services": [
+      "esl",
+      "youth_tutoring",
+      "primary_care",
+      "citizenship"
+    ],
+    "services_text": "🏥 Services: Free adult ESL and citizenship classes (in Korean and English); youth after-school academic programs; community workshops for immigrants",
+    "subcategories": [
+      "Citizenship Preparation",
+      "Youth Tutoring",
+      "ESL Classes"
+    ],
+    "availability_badges": [
+      "Free"
+    ],
+    "languages": [
+      "spanish"
+    ],
+    "hours": {
+      "monday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ],
+      "friday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ]
+    },
+    "hours_text": "⏰ Hours: Mon–Fri 9:00 AM – 5:00 PM",
+    "search_blob": "hana center 📍 4300 n. california ave, chicago, il 60618 🏥 services: free adult esl and citizenship classes (in korean and english); youth after-school academic programs; community workshops for immigrants esl youth_tutoring primary_care citizenship citizenship preparation youth tutoring esl classes spanish ⏰ hours: mon–fri 9:00 am – 5:00 pm"
+  },
+  {
+    "id": "9",
+    "name": "Centro Romero",
+    "address": "📍 6216 N. Clark St, Chicago, IL 60660",
+    "phone": "📞 (773) 508-5300",
+    "phone_digits": "",
+    "website": "",
+    "zip_code": "60660",
+    "services": [
+      "ged",
+      "primary_care",
+      "citizenship",
+      "youth_tutoring",
+      "esl"
+    ],
+    "services_text": "🏥 Services: Free ESL classes (levels 1–6) for adult immigrants; GED preparation in Spanish; citizenship exam preparation; youth tutoring and after-school programs",
+    "subcategories": [
+      "Citizenship Preparation",
+      "Youth Tutoring",
+      "GED Preparation",
+      "ESL Classes"
+    ],
+    "availability_badges": [
+      "Free"
+    ],
+    "languages": [
+      "spanish"
+    ],
+    "hours": {
+      "monday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ],
+      "friday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ]
+    },
+    "hours_text": "⏰ Hours: Mon–Fri 9:00 AM – 5:00 PM",
+    "search_blob": "centro romero 📍 6216 n. clark st, chicago, il 60660 🏥 services: free esl classes (levels 1–6) for adult immigrants; ged preparation in spanish; citizenship exam preparation; youth tutoring and after-school programs ged primary_care citizenship youth_tutoring esl citizenship preparation youth tutoring ged preparation esl classes spanish ⏰ hours: mon–fri 9:00 am – 5:00 pm"
+  },
+  {
+    "id": "10",
+    "name": "PODER",
+    "address": "📍 3357 W. 55th St, Chicago, IL 60632",
+    "phone": "📞 (312) 226-2002",
+    "phone_digits": "",
+    "website": "",
+    "zip_code": "60632",
+    "services": [
+      "computer_literacy",
+      "employment_assistance",
+      "workforce",
+      "financial_literacy",
+      "esl",
+      "literacy"
+    ],
+    "services_text": "🏥 Services: Tuition-free English education classes integrated with job training for Spanish-speaking adults; digital literacy and financial literacy courses; workforce readiness and job placement assistance",
+    "subcategories": [
+      "Computer Literacy",
+      "Adult Literacy",
+      "Financial Literacy",
+      "Workforce Development"
+    ],
+    "availability_badges": [
+      "Free"
+    ],
+    "languages": [
+      "spanish"
+    ],
+    "hours": {
+      "monday": [
+        [
+          [
+            8,
+            30
+          ],
+          [
+            9,
+            0
+          ]
+        ],
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ],
+      "thursday": [
+        [
+          [
+            8,
+            30
+          ],
+          [
+            9,
+            0
+          ]
+        ],
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ],
+        [
+          [
+            9,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      ],
+      "friday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ],
+        [
+          [
+            9,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      ],
+      "saturday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      ]
+    },
+    "hours_text": "⏰ Hours: Mon–Thu 8:30 AM – 9:00 PM; Fri 9:00 AM – 5:00 PM; Sat 9:00 AM – 1:00 PM",
+    "search_blob": "poder 📍 3357 w. 55th st, chicago, il 60632 🏥 services: tuition-free english education classes integrated with job training for spanish-speaking adults; digital literacy and financial literacy courses; workforce readiness and job placement assistance computer_literacy employment_assistance workforce financial_literacy esl literacy computer literacy adult literacy financial literacy workforce development spanish ⏰ hours: mon–thu 8:30 am – 9:00 pm; fri 9:00 am – 5:00 pm; sat 9:00 am – 1:00 pm"
+  },
+  {
+    "id": "11",
+    "name": "Polish American Association (PAA)",
+    "address": "📍 3834 N. Cicero Ave, Chicago, IL 60641",
+    "phone": "📞 (773) 282-8206",
+    "phone_digits": "",
+    "website": "",
+    "zip_code": "60641",
+    "services": [
+      "employment_assistance",
+      "workforce",
+      "citizenship",
+      "esl",
+      "literacy"
+    ],
+    "services_text": "🏥 Services: Free ESL classes for adults (beginner through advanced) in English and Polish; vocational training programs; literacy and citizenship classes",
+    "subcategories": [
+      "Adult Literacy",
+      "Citizenship Preparation",
+      "Workforce Development",
+      "ESL Classes"
+    ],
+    "availability_badges": [
+      "Free"
+    ],
+    "languages": [
+      "polish"
+    ],
+    "hours": {
+      "monday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ],
+      "friday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ]
+    },
+    "hours_text": "⏰ Hours: Mon–Fri 9:00 AM – 5:00 PM",
+    "search_blob": "polish american association (paa) 📍 3834 n. cicero ave, chicago, il 60641 🏥 services: free esl classes for adults (beginner through advanced) in english and polish; vocational training programs; literacy and citizenship classes employment_assistance workforce citizenship esl literacy adult literacy citizenship preparation workforce development esl classes polish ⏰ hours: mon–fri 9:00 am – 5:00 pm"
+  },
+  {
+    "id": "12",
+    "name": "Pui Tak Center",
+    "address": "📍 2216 S. Wentworth Ave, Chicago, IL 60616",
+    "phone": "📞 (312) 328-1188",
+    "phone_digits": "",
+    "website": "",
+    "zip_code": "60616",
+    "services": [
+      "esl",
+      "literacy",
+      "primary_care",
+      "citizenship"
+    ],
+    "services_text": "🏥 Services: Free ESL classes for adult learners (all levels) with focus on Chinese immigrant community; citizenship preparation and family literacy programs",
+    "subcategories": [
+      "Adult Literacy",
+      "Citizenship Preparation",
+      "ESL Classes"
+    ],
+    "availability_badges": [
+      "Free"
+    ],
+    "languages": [
+      "mandarin"
+    ],
+    "hours": {
+      "monday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ],
+      "friday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ]
+    },
+    "hours_text": "⏰ Hours: Mon–Fri 9:00 AM – 5:00 PM",
+    "search_blob": "pui tak center 📍 2216 s. wentworth ave, chicago, il 60616 🏥 services: free esl classes for adult learners (all levels) with focus on chinese immigrant community; citizenship preparation and family literacy programs esl literacy primary_care citizenship adult literacy citizenship preparation esl classes mandarin ⏰ hours: mon–fri 9:00 am – 5:00 pm"
+  },
+  {
+    "id": "13",
+    "name": "Literacy Chicago",
+    "address": "📍 641 W. Lake Street, Suite 104, Chicago, IL 60661",
+    "phone": "📞 (312) 858-6020",
+    "phone_digits": "",
+    "website": "",
+    "zip_code": "60661",
+    "services": [
+      "ged",
+      "citizenship",
+      "youth_tutoring",
+      "esl",
+      "literacy"
+    ],
+    "services_text": "🏥 Services: Free one-on-one tutoring in reading and English for low-literate adults; small-group ESL classes; U.S. civics and GED preparation assistance",
+    "subcategories": [
+      "Adult Literacy",
+      "GED Preparation",
+      "ESL Classes",
+      "Citizenship Preparation",
+      "Youth Tutoring"
+    ],
+    "availability_badges": [
+      "Free"
+    ],
+    "languages": [],
+    "hours": {
+      "monday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ],
+      "friday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ]
+    },
+    "hours_text": "⏰ Hours: Mon–Fri 9:00 AM – 5:00 PM (evening tutoring by appointment)",
+    "search_blob": "literacy chicago 📍 641 w. lake street, suite 104, chicago, il 60661 🏥 services: free one-on-one tutoring in reading and english for low-literate adults; small-group esl classes; u.s. civics and ged preparation assistance ged citizenship youth_tutoring esl literacy adult literacy ged preparation esl classes citizenship preparation youth tutoring ⏰ hours: mon–fri 9:00 am – 5:00 pm (evening tutoring by appointment)"
+  },
+  {
+    "id": "14",
+    "name": "Howard Area Community Center (Education Dept)",
+    "address": "📍 7648 N. Paulina St, Chicago, IL 60626",
+    "phone": "📞 (773) 262-6622",
+    "phone_digits": "",
+    "website": "",
+    "zip_code": "60626",
+    "services": [
+      "ged",
+      "computer_literacy",
+      "workforce",
+      "primary_care",
+      "esl",
+      "literacy"
+    ],
+    "services_text": "🏥 Services: Free ESL classes (levels 1–6) and adult basic education for low-income learners; GED preparation in English and Spanish; computer literacy and workforce readiness training",
+    "subcategories": [
+      "Computer Literacy",
+      "Workforce Development",
+      "Adult Literacy",
+      "GED Preparation",
+      "ESL Classes"
+    ],
+    "availability_badges": [
+      "Free"
+    ],
+    "languages": [
+      "spanish"
+    ],
+    "hours": {
+      "monday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ],
+      "friday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ]
+    },
+    "hours_text": "⏰ Hours: Mon–Fri 9:00 AM – 5:00 PM",
+    "search_blob": "howard area community center (education dept) 📍 7648 n. paulina st, chicago, il 60626 🏥 services: free esl classes (levels 1–6) and adult basic education for low-income learners; ged preparation in english and spanish; computer literacy and workforce readiness training ged computer_literacy workforce primary_care esl literacy computer literacy workforce development adult literacy ged preparation esl classes spanish ⏰ hours: mon–fri 9:00 am – 5:00 pm"
+  },
+  {
+    "id": "15",
+    "name": "Erie Neighborhood House",
+    "address": "📍 1347 W. Erie St, Chicago, IL 60642",
+    "phone": "📞 (312) 666-3430",
+    "phone_digits": "",
+    "website": "",
+    "zip_code": "60642",
+    "services": [
+      "ged",
+      "workforce",
+      "primary_care",
+      "youth_tutoring",
+      "esl"
+    ],
+    "services_text": "🏥 Services: Free adult education classes (ESL and GED prep) in English and Spanish; after-school tutoring and youth mentoring programs; workforce development courses",
+    "subcategories": [
+      "Workforce Development",
+      "Youth Tutoring",
+      "GED Preparation",
+      "ESL Classes"
+    ],
+    "availability_badges": [
+      "Free"
+    ],
+    "languages": [
+      "spanish",
+      "mandarin"
+    ],
+    "hours": {
+      "monday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ],
+      "friday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ]
+    },
+    "hours_text": "⏰ Hours: Mon–Fri 9:00 AM – 5:00 PM",
+    "search_blob": "erie neighborhood house 📍 1347 w. erie st, chicago, il 60642 🏥 services: free adult education classes (esl and ged prep) in english and spanish; after-school tutoring and youth mentoring programs; workforce development courses ged workforce primary_care youth_tutoring esl workforce development youth tutoring ged preparation esl classes spanish mandarin ⏰ hours: mon–fri 9:00 am – 5:00 pm"
+  },
+  {
+    "id": "16",
+    "name": "Syrian Community Network (SCN)",
+    "address": "📍 5439 N. Broadway, Suite 1, Chicago, IL 60640",
+    "phone": "📞 (773) 654-1218",
+    "phone_digits": "",
+    "website": "",
+    "zip_code": "60640",
+    "services": [
+      "esl",
+      "youth_tutoring"
+    ],
+    "services_text": "🏥 Services: Free after-school homework help and tutoring (Online Homework Room for grades 1–8); youth mentorship programs; women’s English conversation classes and support groups",
+    "subcategories": [
+      "Youth Tutoring"
+    ],
+    "availability_badges": [
+      "Free"
+    ],
+    "languages": [
+      "french",
+      "spanish",
+      "arabic"
+    ],
+    "hours": {
+      "monday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ],
+      "friday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ]
+    },
+    "hours_text": "⏰ Hours: Mon–Fri 9:00 AM – 5:00 PM",
+    "search_blob": "syrian community network (scn) 📍 5439 n. broadway, suite 1, chicago, il 60640 🏥 services: free after-school homework help and tutoring (online homework room for grades 1–8); youth mentorship programs; women’s english conversation classes and support groups esl youth_tutoring youth tutoring french spanish arabic ⏰ hours: mon–fri 9:00 am – 5:00 pm"
+  },
+  {
+    "id": "17",
+    "name": "GirlForward",
+    "address": "📍 PO Box 607516, Chicago, IL 60660",
+    "phone": "📞 (773) 856-0598",
+    "phone_digits": "",
+    "website": "",
+    "zip_code": "60660",
+    "services": [
+      "esl",
+      "youth_tutoring"
+    ],
+    "services_text": "🏥 Services: Free after-school tutoring and mentoring program for refugee girls (ages 14–21), focusing on English support, college readiness, and leadership development",
+    "subcategories": [
+      "Youth Tutoring"
+    ],
+    "availability_badges": [
+      "Free"
+    ],
+    "languages": [],
+    "hours": {
+      "monday": [
+        [
+          [
+            10,
+            0
+          ],
+          [
+            6,
+            0
+          ]
+        ]
+      ],
+      "friday": [
+        [
+          [
+            10,
+            0
+          ],
+          [
+            6,
+            0
+          ]
+        ]
+      ]
+    },
+    "hours_text": "⏰ Hours: Mon–Fri 10:00 AM – 6:00 PM",
+    "search_blob": "girlforward 📍 po box 607516, chicago, il 60660 🏥 services: free after-school tutoring and mentoring program for refugee girls (ages 14–21), focusing on english support, college readiness, and leadership development esl youth_tutoring youth tutoring ⏰ hours: mon–fri 10:00 am – 6:00 pm"
+  },
+  {
+    "id": "18",
+    "name": "Refugee FORA (Forging Opportunities for Refugees in America)",
+    "address": "📍 6435 N. California Ave, Chicago, IL 60645",
+    "phone": "📞 (312) 685-2655",
+    "phone_digits": "",
+    "website": "",
+    "zip_code": "60645",
+    "services": [
+      "pediatric",
+      "primary_care",
+      "youth_tutoring",
+      "literacy",
+      "legal"
+    ],
+    "services_text": "🏥 Services: Free high-impact after-school tutoring for refugee children (grades K–12) with a 2:1 student-tutor ratio; family literacy and school engagement through the Family School Partnership program",
+    "subcategories": [
+      "Adult Literacy",
+      "Youth Tutoring"
+    ],
+    "availability_badges": [
+      "Free"
+    ],
+    "languages": [],
+    "hours": {
+      "monday": [
+        [
+          [
+            3,
+            0
+          ],
+          [
+            6,
+            0
+          ]
+        ]
+      ],
+      "friday": [
+        [
+          [
+            3,
+            0
+          ],
+          [
+            6,
+            0
+          ]
+        ]
+      ]
+    },
+    "hours_text": "⏰ Hours: Mon–Fri 3:00 PM – 6:00 PM (tutoring sessions)",
+    "search_blob": "refugee fora (forging opportunities for refugees in america) 📍 6435 n. california ave, chicago, il 60645 🏥 services: free high-impact after-school tutoring for refugee children (grades k–12) with a 2:1 student-tutor ratio; family literacy and school engagement through the family school partnership program pediatric primary_care youth_tutoring literacy legal adult literacy youth tutoring ⏰ hours: mon–fri 3:00 pm – 6:00 pm (tutoring sessions)"
+  },
+  {
+    "id": "19",
+    "name": "Rohingya Culture Center (RCC)",
+    "address": "📍 2740 W. Devon Ave, Chicago, IL 60659",
+    "phone": "📞 (773) 856-0758",
+    "phone_digits": "",
+    "website": "",
+    "zip_code": "60659",
+    "services": [
+      "pediatric",
+      "youth_tutoring",
+      "esl"
+    ],
+    "services_text": "🏥 Services: Free ESL classes for Rohingya adults (taught in Rohingya and English); after-school tutoring for Rohingya children; cultural preservation activities and social services for Rohingya refugees",
+    "subcategories": [
+      "Youth Tutoring",
+      "ESL Classes"
+    ],
+    "availability_badges": [
+      "Free"
+    ],
+    "languages": [],
+    "hours": {
+      "monday": [
+        [
+          [
+            10,
+            0
+          ],
+          [
+            6,
+            0
+          ]
+        ]
+      ],
+      "friday": [
+        [
+          [
+            10,
+            0
+          ],
+          [
+            6,
+            0
+          ]
+        ]
+      ]
+    },
+    "hours_text": "⏰ Hours: Mon–Fri 10:00 AM – 6:00 PM",
+    "search_blob": "rohingya culture center (rcc) 📍 2740 w. devon ave, chicago, il 60659 🏥 services: free esl classes for rohingya adults (taught in rohingya and english); after-school tutoring for rohingya children; cultural preservation activities and social services for rohingya refugees pediatric youth_tutoring esl youth tutoring esl classes ⏰ hours: mon–fri 10:00 am – 6:00 pm"
+  },
+  {
+    "id": "20",
+    "name": "South-East Asia Center (SEAC)",
+    "address": "📍 5120 N. Broadway, Chicago, IL 60640",
+    "phone": "📞 (773) 989-7433",
+    "phone_digits": "",
+    "website": "",
+    "zip_code": "60640",
+    "services": [
+      "esl",
+      "youth_tutoring",
+      "citizenship"
+    ],
+    "services_text": "🏥 Services: Free ESL classes and conversation groups for immigrant adults (in multiple Asian languages); citizenship classes and senior education programs; youth after-school tutoring in Uptown area",
+    "subcategories": [
+      "Citizenship Preparation",
+      "Youth Tutoring",
+      "ESL Classes"
+    ],
+    "availability_badges": [
+      "Free"
+    ],
+    "languages": [
+      "mandarin"
+    ],
+    "hours": {
+      "monday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ],
+      "friday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ]
+    },
+    "hours_text": "⏰ Hours: Mon–Fri 9:00 AM – 5:00 PM",
+    "search_blob": "south-east asia center (seac) 📍 5120 n. broadway, chicago, il 60640 🏥 services: free esl classes and conversation groups for immigrant adults (in multiple asian languages); citizenship classes and senior education programs; youth after-school tutoring in uptown area esl youth_tutoring citizenship citizenship preparation youth tutoring esl classes mandarin ⏰ hours: mon–fri 9:00 am – 5:00 pm"
+  },
+  {
+    "id": "21",
+    "name": "ReRite Refuge",
+    "address": "📍 1751 O'Plaine Rd, Libertyville, IL 60048",
+    "phone": "📞 (216) 703-5113",
+    "phone_digits": "",
+    "website": "",
+    "zip_code": "60048",
+    "services": [
+      "literacy",
+      "youth_tutoring"
+    ],
+    "services_text": "🏥 Services: Offering refugee and underserved youth K–8 summer education programs with Math, Reading, STEM, and History lessons, plus youth tutoring for homework during the school year (K–8)",
+    "subcategories": [
+      "Adult Literacy",
+      "Youth Tutoring"
+    ],
+    "availability_badges": [],
+    "languages": [
+      "arabic"
+    ],
+    "hours": {
+      "saturday": [
+        [
+          [
+            10,
+            30
+          ],
+          [
+            12,
+            30
+          ]
+        ]
+      ]
+    },
+    "hours_text": "⏰ Hours: Saturday 10:30 AM – 12:30 PM",
+    "search_blob": "rerite refuge 📍 1751 o'plaine rd, libertyville, il 60048 🏥 services: offering refugee and underserved youth k–8 summer education programs with math, reading, stem, and history lessons, plus youth tutoring for homework during the school year (k–8) literacy youth_tutoring adult literacy youth tutoring arabic ⏰ hours: saturday 10:30 am – 12:30 pm"
+  },
+  {
+    "id": "22",
+    "name": "Heartland Alliance – Refugee & Immigrant Community Services (RICS)",
+    "address": "📍 4419 N. Ravenswood Ave, Chicago, IL 60640",
+    "phone": "📞 (773) 728-5960",
+    "phone_digits": "",
+    "website": "",
+    "zip_code": "60640",
+    "services": [
+      "workforce",
+      "refugee_resettlement",
+      "mental_health",
+      "esl",
+      "employment_assistance",
+      "legal"
+    ],
+    "services_text": "🏥 Services: Resettlement, legal aid, mental health, ESL classes, and vocational training (especially for trauma survivors)",
+    "subcategories": [
+      "Workforce Development",
+      "ESL Classes"
+    ],
+    "availability_badges": [],
+    "languages": [
+      "spanish",
+      "arabic"
+    ],
+    "hours": {
+      "monday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ],
+      "friday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ]
+    },
+    "hours_text": "⏰ Hours: Mon–Fri 9 AM–5 PM (office hours)",
+    "search_blob": "heartland alliance – refugee & immigrant community services (rics) 📍 4419 n. ravenswood ave, chicago, il 60640 🏥 services: resettlement, legal aid, mental health, esl classes, and vocational training (especially for trauma survivors) workforce refugee_resettlement mental_health esl employment_assistance legal workforce development esl classes spanish arabic ⏰ hours: mon–fri 9 am–5 pm (office hours)"
+  },
+  {
+    "id": "23",
+    "name": "Vietnamese Association of Illinois (Chicago)",
+    "address": "📍 5110 N. Broadway St, Chicago, IL 60640",
+    "phone": "📞 (773) 728-3700",
+    "phone_digits": "",
+    "website": "",
+    "zip_code": "60640",
+    "services": [
+      "esl",
+      "employment_assistance",
+      "mental_health",
+      "workforce"
+    ],
+    "services_text": "🏥 Services: ESL classes, job placement assistance, and mental health support for Vietnamese and other immigrants",
+    "subcategories": [
+      "ESL Classes"
+    ],
+    "availability_badges": [],
+    "languages": [],
+    "hours": {
+      "monday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ],
+      "friday": [
+        [
+          [
+            9,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ]
+      ]
+    },
+    "hours_text": "⏰ Hours: Mon–Fri 9 AM–5 PM",
+    "search_blob": "vietnamese association of illinois (chicago) 📍 5110 n. broadway st, chicago, il 60640 🏥 services: esl classes, job placement assistance, and mental health support for vietnamese and other immigrants esl employment_assistance mental_health workforce esl classes ⏰ hours: mon–fri 9 am–5 pm"
+  }
+]
