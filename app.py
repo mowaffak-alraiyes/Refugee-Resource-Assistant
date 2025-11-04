@@ -1,47 +1,38 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
+import ollama
 
-# Add a title to the app
-st.title("Streamlit Demonstration App")
+st.set_page_config(page_title="Ollama Chat")
 
-# Add some text
-st.write("This app showcases some of the basic features of Streamlit.")
+st.title("💬 Chat with Local LLM")
 
-# Create a simple dataframe
-data = {
-    'Column 1': np.random.rand(10),
-    'Column 2': np.random.rand(10),
-    'Column 3': np.random.rand(10)
-}
-df = pd.DataFrame(data)
+# Use session state to store messages
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
 
-# Display the dataframe as a table
-st.write("Here is a sample dataframe:")
-st.write(df)
+# User input
+prompt = st.chat_input("Type your question here...")
 
-# Create a line chart
-st.line_chart(df)
+# Display chat history
+for role, msg in st.session_state.chat_history:
+    with st.chat_message(role):
+        st.markdown(msg)
 
-# Add a slider widget
-st.write("Use the slider to change the value:")
-x = st.slider('x', value=50)
-st.write(x, 'squared is', x * x)
+# When user submits a prompt
+if prompt:
+    # Show user message
+    st.session_state.chat_history.append(("user", prompt))
+    with st.chat_message("user"):
+        st.markdown(prompt)
 
-# Add a button
-if st.button('Say hello'):
-    st.write('Why hello there')
-else:
-    st.write('Goodbye')
+    # Send to Ollama
+    response = ollama.chat(
+        model="llama3",
+        messages=[{"role": role, "content": msg} for role, msg in st.session_state.chat_history]
+    )
 
-# Add a selectbox
-option = st.selectbox(
-    'How would you like to be contacted?',
-    ('Email', 'Home phone', 'Mobile phone'))
+    reply = response['message']['content']
 
-st.write('You selected:', option)
-
-# Add a checkbox to show/hide data
-if st.checkbox('Show raw data'):
-    st.subheader('Raw data')
-    st.write(df)
+    # Show assistant message
+    st.session_state.chat_history.append(("assistant", reply))
+    with st.chat_message("assistant"):
+        st.markdown(reply)

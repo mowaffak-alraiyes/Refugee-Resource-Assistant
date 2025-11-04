@@ -148,3 +148,16 @@ cython_debug/
 
 # VSCode
 .vscode/
+
+# Streamlit secrets and config
+.streamlit/
+
+# Generated data files (regenerated from GitHub .txt files)
+data/*.json
+
+# Database files
+*.db
+conversations.db
+
+# macOS system files
+.DS_Store
